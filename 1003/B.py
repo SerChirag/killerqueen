@@ -3,9 +3,16 @@ a = p[0]
 b = p[1]
 x = p[2]
 bc = b
-ac = a-1
+ac = a
+if(a>b):
+    s = "0"
+    ac-=1
+else:
+    s = "1"
+    bc-=1
+
 xc = x
-s = "0"
+
 while(xc):
     if(s[-1] == "0"):
         if(bc):
