@@ -1,7 +1,6 @@
 from sys import stdin,stdout
 n = int(stdin.readline())
 m = {}
-done = {}
 for q in range(n-1):
     x,y = map(int,stdin.readline().split())
     try:
@@ -16,31 +15,33 @@ for q in range(n-1):
         m[y] = [x]
 
 a = map(int,stdin.readline().split())
-curr = {1}
+pos = {}
+for i in range(len(a)):
+    pos[a[i]] = i
+def ke(popo):
+    return pos[popo]
+for i in m:
+    m[i].sort(key = ke)
+
+done = {}
+curr = [1]
+tour = [1]
 done[1] = 1
-flag = 1
-ja = 0
 while(curr):
-    leni = len(curr)
-    check = set(a[ja:ja+leni])
-    if(check == curr):
-        ja+=leni
-    else:
-        flag = 0
-        break
-
-    ne = []
+    nex = []
     for i in curr:
-        for j in m[i]:
-            try:
-                po = done[j] 
-            except:
-                ne.append(j)
-                done[j] = 1
-    ne = set(ne)
-    curr = ne
+        try:
+            for j in m[i]:
+                aa = done.get(j,0)
+                if(aa == 0):
+                    tour.append(j)
+                    done[j]=1
+                    nex.append(j)
+        except:
+            pass
+    curr = nex
 
-if(flag == 1):
+if(a == tour):
     stdout.write("Yes")
 else:
     stdout.write("No")

@@ -1,33 +1,22 @@
-n = input()
-a = map(int,raw_input().split())
-d = {}
+from sys import stdin,stdout
+n = int(stdin.readline())
+a = map(int,stdin.readline().split())
+m = {}
+for i in a:
+    try:
+        po = m[i-1]
+        m[i] = po+1
+    except:
+        m[i] = 1
+
+m = m.items()
+maxi = max(m, key = lambda x : x[1])
+out = []
+curr = maxi[0]
 for i in range(n-1,-1,-1):
-    try:
-        po = d[a[i]+1]
-        d[a[i]] = [po[0]+1,i,po[1]]
-    except:
-        d[a[i]] = [1,i,-1]
-
-
-m = 0
-me = 0
-for i in d:
-    if(d[i][0] > m):
-        m = d[i][0]
-        me = i
-
-o = []
-while(1):
-    try:
-        po = d[me]
-        o.append(po[1])
-        me+=1
-        if(po[2] == -1):
-            break
-    except:
-        break
-
-print len(o)
-for i in o:
-    print i+1,
-print 
+    if(a[i] == curr):
+        out.append(str(i+1))
+        curr-=1
+out.reverse()
+stdout.write(str(len(out))+"\n")
+stdout.write(" ".join(out))
